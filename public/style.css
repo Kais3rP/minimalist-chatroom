@@ -85,7 +85,7 @@ i:hover{
 
 
 .chat-box{
-  width:10%;
+  width:50%;
   height:80%;
   font-size:12px;
   border:1px solid grey;
@@ -94,8 +94,10 @@ i:hover{
 }
 
 .reglog {
+  padding:10px;
   border: 1px solid black;
-  width:15vw;
+  width:max(20vw,200px);
+  height: 
   background-color: lavender;
 }
 

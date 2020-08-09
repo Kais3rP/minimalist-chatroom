@@ -11,9 +11,9 @@ html
   body.flex-col
     h1 Minimalist Private Chat
     h2 Socket.IO Chat Room
-    if showLogin
+    div.flex-row-space
+      if showLogin
       div.reglog
-        hr
         p Login Form
         form(action='/login', method='post')
           div
@@ -24,10 +24,8 @@ html
             input(type='password', name='password')
           div
             input(type='submit', value='Log In')
-
       if showRegistration
         div.reglog
-          hr
           p Registration Form
           form(action='/register', method='post')
             div
