@@ -17,8 +17,8 @@ module.exports = function(app, db) {
   });
 
   passport.deserializeUser((id, done) => {
-    if (/\w/.test(id))
-      db.collection("chatusers").findOne(
+    
+    if (/[a-z]/.test(id)) db.collection("chatusers").findOne(
         { _id: new ObjectId(id) },
         (err, doc) => {
           done(null, doc);

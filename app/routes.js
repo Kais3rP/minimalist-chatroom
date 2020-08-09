@@ -77,7 +77,7 @@ module.exports = function(app, db) {
   });
 
   app.route("/chat").get(helperFunctions.ensureAuthenticated, (req, res) => {
-    console.log("it comes here");
+    console.log("it comes on chat endpoint");
     res.render(process.cwd() + "/views/pug/chat", { user: req.user });
   });
 

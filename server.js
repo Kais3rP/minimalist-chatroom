@@ -50,8 +50,8 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
   var currentUsers = 0;
   //This is an event listener for the first socket request that is not http, but thanks to passportSocketIo middleware it carries session user info
   io.on('connection', (socket)=>{   
-    console.log(socket.request)
-    let userName = socket.request.user.name;
+    console.log(socket.request.user)
+    let userName = socket.request.user.name ? socket.request.user.name : socket.request.user.username;
     currentUsers++; //Increment the counter of Users at every connection
     console.log(`User ${socket.request.user.name} has connected.`);
     socket.on('disconnect', () => {
