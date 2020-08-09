@@ -13,11 +13,21 @@ module.exports = function (app, db) {
     app.use(passport.session());
 
     passport.serializeUser((user, done) => {
-      done(null, user.id);
+      console.log(user)
+      if (user.id) done(null, user.id)
+      else done(null, user._id.concat('local'));
+    
     });
 
     passport.deserializeUser((id, done) => {
-        db.collection('chatusers').findOne(
+      console.log(id)
+      if (/Object/.test(id)) db.collection('chatusers').findOne(
+            {_id: id},
+            (err, doc) => {
+                done(null, doc);
+            }
+        )
+      else db.collection('chatusers').findOne(
             {id: id},
             (err, doc) => {
                 done(null, doc);
@@ -42,7 +52,7 @@ passport.use(
           return done(null, false);
         } //password wrong { return done(null, false); }
         
-        console.log(user)
+        
         return done(null, user);
       } catch {
         return done("Error");
