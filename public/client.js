@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
   //Listen to the event 'user' from the server sent to all the sockets connected once a new socket connects or disconnects
   socket.on("user", function(data) {
     let message;
-    userName = data.name; //assigns the userData name
    
     if (data.connected) message = `${data.name} has joined the chat.`;
     else message = `${data.name} has left the chat.`;
