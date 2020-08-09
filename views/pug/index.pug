@@ -13,29 +13,19 @@ html
     h2 Socket.IO Chat Room
     div.flex-row-space
       if showLogin
-      div.reglog
-        p Login Form
+      div.reglog.flex-col
+        div Login
         form(action='/login', method='post')
-          div
-            label Username:
-            input(type='text', name='username')
-          div
-            label Password:
-            input(type='password', name='password')
-          div
-            input(type='submit', value='Log In')
+          input(type='text', name='username', placeholder='Username')
+          input(type='password', name='password', placeholder='Password')
+          input(type='submit', value='Log In')
       if showRegistration
-        div.reglog
-          p Registration Form
+        div.reglog.flex-col
+          div Register
           form(action='/register', method='post')
-            div
-              label Username:
-              input(type='text', name='username')
-            div
-              label Password:
-              input(type='password', name='password')
-            div
-              input(type='submit', value='Register')
+            input(type='text', name='username', placeholder='Username')
+            input(type='password', name='password', placeholder='Password')
+            input(type='submit', value='Register')
     h3 Login with your Google or GitHub account!
     div.flex-row
       a(href='/auth/github')

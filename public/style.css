@@ -9,6 +9,10 @@ body {
   line-height: 1.5em;
 }
 
+p{
+  text-align: center;
+  background:red;
+}
 h1 {
   color: grey;
   max-width: calc(100% - 5rem);
@@ -97,7 +101,8 @@ i:hover{
   padding:10px;
   border: 1px solid black;
   width:max(20vw,200px);
-  height: 
+  height: 10vh;
+  min-height: 200px;
   background-color: lavender;
 }
 
