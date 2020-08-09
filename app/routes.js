@@ -1,6 +1,6 @@
 const passport = require("passport");
 const bcrypt = require("bcrypt");
-const ObjectId = require('mongodb').ObjectID;
+const ObjectId = require("mongodb").ObjectID;
 
 module.exports = function(app, db) {
   //Local Registration/Login Routes
@@ -13,21 +13,16 @@ module.exports = function(app, db) {
       //If user doesn't exist we create one
       let hashedPwd = bcrypt.hashSync(req.body.password, 8); //crpyting pwd
       let userDb = await db.collection("chatusers").insertOne({
-        
         username: req.body.username,
         password: hashedPwd
       });
-      let autenthication = await passport.authenticate("local", {
-        failureRedirect: "/"
-      });
-  
       res.render(process.cwd() + "/views/pug/index", {
         showRegistration: false,
         showLogin: true
       });
     } catch {
       console.log("Error retrieving/creating user from the db");
-      return res.redirect('/');
+      return res.redirect("/");
     }
   });
 
@@ -42,17 +37,15 @@ module.exports = function(app, db) {
     );
 
   //Google OAuth2 route
-  app
-    .route("/auth/google")
-    .get(
-      passport.authenticate("google", {
-        scope: [
-          "https://www.googleapis.com/auth/plus.login",
-          ,
-          "https://www.googleapis.com/auth/plus.profile.emails.read"
-        ]
-      })
-    ); //Google wants an options object with a scope property
+  app.route("/auth/google").get(
+    passport.authenticate("google", {
+      scope: [
+        "https://www.googleapis.com/auth/plus.login",
+        ,
+        "https://www.googleapis.com/auth/plus.profile.emails.read"
+      ]
+    })
+  ); //Google wants an options object with a scope property
 
   app
     .route("/auth/google/callback")
