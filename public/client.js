@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "message received from " + data.name + " content " + data.message
       );
       console.log(messages);
-      createAndAppendLi(messages, data.message);
+      createAndAppendLi(messages, data.message, data.name);
       
        //scroll the window to the bottom
        messages.scrollTop = messages.scrollHeight;
@@ -51,8 +51,9 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 });
 
-function createAndAppendLi(elem, message) {
+function createAndAppendLi(elem, message, username) {
   let li = document.createElement("li");
-  li.innerHTML = message;
+  if (username) li.innerHTML = `${username}: ${message}`;
+  else li.innerHTML = message;
   elem.appendChild(li);
 }

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro&family=Special+Elite&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -7,6 +9,7 @@ body {
   font-family: sans-serif;
   margin: 0;
   line-height: 1.5em;
+  font-family: 'Advent Pro', sans-serif;
 }
 
 p{
@@ -14,14 +17,16 @@ p{
  
 }
 h1 {
-  color: grey;
+
   max-width: calc(100% - 5rem);
   line-height: 1.1;
+  
 }
 
 form {
   padding: 1em;
   width:100%;
+  font-family: 'Advent Pro', sans-serif;
 }
 
 input {
@@ -32,6 +37,8 @@ input {
   padding: 5px;
   width: 100%;
   border-radius: .25em;
+  font-family: 'Advent Pro', sans-serif;
+  
   
 }
 
@@ -45,6 +52,7 @@ button {
   padding: 0.25em 1em;
   max-width: 20ch;
   margin-bottom:25px;
+  font-family: 'Advent Pro', sans-serif;
 }
 
  button:hover {
@@ -124,4 +132,8 @@ i:hover{
 
 #messages li:nth-child(odd) {   
   background: #eee;
+}
+
+#logout{
+  padding:10px;
 }
