@@ -54,10 +54,12 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     let userName = socket.request.user.name ? socket.request.user.name : socket.request.user.username;
     currentUsers++; //Increment the counter of Users at every connection
     console.log(`User ${socket.request.user.name} has connected.`);
+    //
     socket.on('disconnect', () => {
-      io.emit('user', {connected: false})
-      console.log('user disconnected');
       currentUsers--;
+      io.emit('user', {name: userName, currentUsers: currentUsers, connected: false})
+      console.log('user disconnected');
+      
   });
     //emits user info
     io.emit('user', {name: userName, currentUsers: currentUsers, connected: true}); //Emits an event to all the socket clients with the variable currentUsers
