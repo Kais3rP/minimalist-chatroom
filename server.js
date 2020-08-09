@@ -63,7 +63,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
   });
     //emits user info
     io.emit('user', {name: userName, currentUsers: currentUsers, connected: true}); //Emits an event to all the socket clients with the variable currentUsers
-    
+    socket.emit('username', {name: userName});
      //listen for messages incoming
     //Takes the message from the specific socket connected and emits it to all the sockets with io.emit
     socket.on('chat message', (data) => {

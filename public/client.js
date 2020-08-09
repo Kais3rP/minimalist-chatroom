@@ -35,7 +35,9 @@ document.addEventListener("DOMContentLoaded", function() {
        messages.scrollTop = messages.scrollHeight;
     });
   
-  
+    socket.on('username', function(data){
+      userName = data.name
+    })
   // Form submittion with new message in field with id 'm'
   form.onsubmit = function() {
     console.log("form submitting");
