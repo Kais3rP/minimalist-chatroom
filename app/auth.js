@@ -41,7 +41,7 @@ passport.use(
           console.log("Wrong Password");
           return done(null, false);
         } //password wrong { return done(null, false); }
-        user.id = new ObjectId(user._id);
+        
         console.log(user)
         return done(null, user);
       } catch {
