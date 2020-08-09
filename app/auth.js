@@ -5,6 +5,7 @@ const GitHubStrategy = require('passport-github').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const LocalStrategy = require("passport-local");
 const bcrypt = require("bcrypt");
+const ObjectId = require('mongodb').ObjectID;
 
 module.exports = function (app, db) {
   
@@ -40,6 +41,8 @@ passport.use(
           console.log("Wrong Password");
           return done(null, false);
         } //password wrong { return done(null, false); }
+        user.id = new ObjectId(user._id);
+        console.log(user)
         return done(null, user);
       } catch {
         return done("Error");
