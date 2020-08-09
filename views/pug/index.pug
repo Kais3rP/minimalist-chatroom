@@ -10,23 +10,22 @@ html
     link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.14.0/css/all.css", integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc", crossorigin="anonymous")
   body.flex-col
     h1 Minimalist Private Chat
-    h2 Socket.IO Chat Room
     div.flex-row-space
       if showLogin
       div.reglog.flex-col
         div Login
         form(action='/login', method='post')
-          input(type='text', name='username', placeholder='Username')
-          input(type='password', name='password', placeholder='Password')
+          input(type='text', name='username', placeholder='Username', required)
+          input(type='password', name='password', placeholder='Password', required)
           input(type='submit', value='Log In')
       if showRegistration
         div.reglog.flex-col
           div Register
           form(action='/register', method='post')
-            input(type='text', name='username', placeholder='Username')
-            input(type='password', name='password', placeholder='Password')
+            input(type='text', name='username', placeholder='Username', required)
+            input(type='password', name='password', placeholder='Password', required)
             input(type='submit', value='Register')
-    h3 Login with your Google or GitHub account!
+    h4 Login with your Google or GitHub account!
     div.flex-row
       a(href='/auth/github')
         i.fab.fa-github.fa-5x

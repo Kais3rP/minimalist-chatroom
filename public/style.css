@@ -11,7 +11,7 @@ body {
 
 p{
   text-align: center;
-  background:red;
+ 
 }
 h1 {
   color: grey;
@@ -89,8 +89,7 @@ i:hover{
 
 
 .chat-box{
-  width:50%;
-  height:80%;
+  width:max(50vw, 300px);
   font-size:12px;
   border:1px solid grey;
   border-radius:10px;
@@ -104,6 +103,9 @@ i:hover{
   height: 10vh;
   min-height: 200px;
   background-color: lavender;
+  margin:5px;
+  box-shadow: 2px 2px 7px 1px grey;
+  border-radius: 5px;
 }
 
 #messages { 
