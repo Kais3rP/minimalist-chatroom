@@ -1,0 +1,22 @@
+html
+  head
+    title Minimal Private Chat
+    meta(name='description', content='Home page')
+    link#favicon(rel='icon', href='https://hyperdev.com/favicon-app.ico', type='image/x-icon')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/public/style.css')
+  body.flex-col
+    h1.border.center Minimalist Private Chat
+    h2.center Socket.IO Chat Room
+    p#num-users
+    .chat-box
+      ul#messages
+      form(action='')
+        input#input(autocomplete='off')
+        button(type='submit') Send
+      a#logout(href='/logout') Logout  
+    h4.bottom Created by Cesare Polonara  
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js')
+    script(src='/public/client.js')

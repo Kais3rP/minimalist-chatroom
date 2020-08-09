@@ -1,0 +1,46 @@
+html
+  head
+    title Minimal Private Chat
+    meta(name='description', content='Home page')
+    link#favicon(rel='icon', href='https://hyperdev.com/favicon-app.ico', type='image/x-icon')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/public/style.css')
+    link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.14.0/css/all.css", integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc", crossorigin="anonymous")
+  body.flex-col
+    h1 Minimalist Private Chat
+    h2 Socket.IO Chat Room
+    if showLogin
+      div.reglog
+        hr
+        p Login Form
+        form(action='/login', method='post')
+          div
+            label Username:
+            input(type='text', name='username')
+          div
+            label Password:
+            input(type='password', name='password')
+          div
+            input(type='submit', value='Log In')
+
+      if showRegistration
+        div.reglog
+          hr
+          p Registration Form
+          form(action='/register', method='post')
+            div
+              label Username:
+              input(type='text', name='username')
+            div
+              label Password:
+              input(type='password', name='password')
+            div
+              input(type='submit', value='Register')
+    h3 Login with your Google or GitHub account!
+    div.flex-row
+      a(href='/auth/github')
+        i.fab.fa-github.fa-5x
+      a(href='/auth/google')
+        i.fab.fa-google.fa-5x  

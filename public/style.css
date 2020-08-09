@@ -1,28 +1,23 @@
-/* this file is loaded by index.html and styles the page */
-
 * {
   box-sizing: border-box;
 }
 
 body {
+  background:white;
   font-family: sans-serif;
-  margin: 2em 1em;
+  margin: 0;
   line-height: 1.5em;
 }
 
 h1 {
-  font-style: italic;
-  color: #373fff;
+  color: grey;
   max-width: calc(100% - 5rem);
   line-height: 1.1;
 }
 
 form {
-  background-color: #eee;
-  display: grid;
-  grid-gap: 1em;
   padding: 1em;
-  max-width: 40ch;
+  width:100%;
 }
 
 input {
@@ -32,9 +27,11 @@ input {
   margin-bottom: 10px;
   padding: 5px;
   width: 100%;
+  border-radius: .25em;
+  
 }
 
-form button {
+button {
   background-color: #bbbbf2;
   border: 2px solid currentColor;
   border-radius: .25em;
@@ -43,14 +40,79 @@ form button {
   line-height: 1.4em;
   padding: 0.25em 1em;
   max-width: 20ch;
+  margin-bottom:25px;
 }
 
-form button:hover {
+ button:hover {
   background-color: lavender;
 }
 
-footer {
-  margin-top: 3em;
-  padding-top: 1.5em;
-  border-top: 1px solid lightgrey;
+a{
+  text-decoration: none;
+  color: grey;
+}
+a:hover{
+  color:black;
+}
+
+i{
+  color: #bbbbf2;
+  padding:20px;
+}
+i:hover{
+  color: lavender;
+}
+.flex-row-space{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+.flex-row{
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  
+}
+
+.flex-col{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
+.chat-box{
+  width:50%;
+  height:80%;
+  font-size:12px;
+  border:1px solid grey;
+  border-radius:10px;
+  box-shadow:2px 2px 10px 5px grey;
+}
+
+.reglog {
+  border: 1px solid black;
+  width:15vw;
+  background-color: lavender;
+}
+
+#messages { 
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  height: 20em;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+#messages li { 
+  padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {   
+  background: #eee;
 }
