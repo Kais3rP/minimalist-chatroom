@@ -137,6 +137,13 @@ i:hover{
 
 #users-list {
   width:30%;
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  height: 20em;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 #logout{
   padding:10px;
