@@ -117,6 +117,7 @@ i:hover{
 }
 
 #messages { 
+  width:70%;
   list-style-type: none;
   text-align: left;
   margin: 0;
@@ -134,6 +135,9 @@ i:hover{
   background: #eee;
 }
 
+#users-list {
+  width:30%;
+}
 #logout{
   padding:10px;
 }
