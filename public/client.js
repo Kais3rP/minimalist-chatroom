@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
     //prints user info
     currentUsers.innerText = `Number of users connected: ${data.currentUsers}`;
+    console.log(data)
+    usersList.innerHTML = data.usersList.map( x => `<li>${x}</li>`) 
     let infoUser = `<b> ${message} <\/b>`;
     createAndAppendLi(messages, infoUser);
     });
