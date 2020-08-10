@@ -62,10 +62,11 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     //Manage disconnection
     socket.on('disconnect', () => {
       currentUsers--;
-      usersList.pop(userName);
+      usersList.splice(usersList.indexOf(userName),1);
       console.log(currentUsers)
       console.log(usersList)
-      io.emit('user', {name: userName, currentUsers: currentUsers, connected: false})
+      console.log(userName)
+      io.emit('user', {name: userName, currentUsers: currentUsers, usersList: usersList, connected: false})
       console.log('user disconnected');
       
   });
