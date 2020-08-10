@@ -45,11 +45,12 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     routes(app, db);
       
     http.listen(process.env.PORT || 3000);
-
+//------------------------------------------------------------------
   //Start ioSocket
   //Store the number of currentusers connected
   var currentUsers = 0;
   var usersList = [];
+  
   //This is an event listener for the first socket request that is not http, but thanks to passportSocketIo middleware it carries session user info
   io.on('connection', (socket)=>{   
     
@@ -59,7 +60,8 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     console.log(`User ${socket.request.user.name} has connected.`);
     console.log(currentUsers)
     console.log(usersList)
-    //Manage disconnection
+    //-------------------------------------------------------
+    //Manage disconnection of a connected socket
     socket.on('disconnect', () => {
       currentUsers--;
       usersList.splice(usersList.indexOf(userName),1);
@@ -70,6 +72,10 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       console.log('user disconnected');
       
   });
+    
+    
+    //---------------------------------------------------------
+    
     //emits user info
     io.emit('user', {name: userName, currentUsers: currentUsers, usersList: usersList, connected: true}); //Emits an event to all the socket clients with the variable currentUsers
     socket.emit('username', {name: userName});
@@ -79,7 +85,14 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       console.log('message received from ' + data.name + ' content ' + data.message)
       //emits back the message to all the client sockets
       io.emit('chat message', {name: data.name, message: data.message})
-    })
+    });
+    
+   //--------------------------------------------------------
+    //Manage private messaging from client sockets
+    
+    socket.on('say to someone', (id, msg) => {
+      socket.to(id).emit('my message', msg);
+  });
    });
   
   
