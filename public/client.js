@@ -10,9 +10,11 @@ let userName;
 var socket = io(); //This sends a 'connection' event to the io listening on server, sending the socket as data
 
 document.addEventListener("DOMContentLoaded", function() {
-  
+    
   //Listen to the event 'user' from the server sent to all the sockets connected once a new socket connects or disconnects
   socket.on("user", function(data) {
+    
+    let name = data.name; //saves the name of the user that connects/disconnects
     let message;
     console.log(data.connected)
     if (data.connected) message = `${data.name} has joined the chat.`;
@@ -20,9 +22,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
     //prints user info
     currentUsers.innerText = `Number of users connected: ${data.currentUsers}`;
-    usersList.innerHTML = data.usersList.map( x => `<li>${x}</li>`) 
+    //usersList.innerHTML = data.usersList.map( x => `<li>${x}</li>`) 
     let infoUser = `<b> ${message} <\/b>`;
     createAndAppendLi(messages, infoUser);
+    
+    if (data.connected) createAndAppendLi(usersList, name )
+    else usersList.remove(document.)
     });
 
      //Listener for incoming chat messages
@@ -53,7 +58,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function createAndAppendLi(elem, message, username) {
   let li = document.createElement("li");
-  if (username) li.innerHTML = `${username}: ${message}`;
-  else li.innerHTML = message;
+  if (username) {
+    li.setAttribute('id', username);
+    li.innerHTML = `${username}: ${message}`;
+  }
+  else {
+    li.innerHTML = message;
   elem.appendChild(li);
 }
+  
+  function removeLi(){
+    
+  }
