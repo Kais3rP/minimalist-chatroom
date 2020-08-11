@@ -11,6 +11,8 @@ let userName;
 var socket = io(); //This sends a 'connection' event to the io listening on server, sending the socket as data
 
 document.addEventListener("DOMContentLoaded", function() {
+  //-------------------------------------------------------------------------------------------------------------------------//
+  //This happens whenever a new user connects/disconnects //
   //Listen to the event 'user' from the server sent to all the sockets connected once a new socket connects or disconnects
   socket.on("user", function(data) {
     let message;
@@ -26,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
     let infoUser = `<b> ${message} <\/b>`;                                        
     createAndAppendLi(messages, infoUser);
   });
-
+ //-------------------------------------------------------------------------------------------------------------------------//
+  //This happens whenever a user sends a public message //
   //Listener for incoming chat messages
   socket.on("chat message", function(data) {
     console.log(
@@ -38,7 +41,8 @@ document.addEventListener("DOMContentLoaded", function() {
     //scroll the window to the bottom
     messages.scrollTop = messages.scrollHeight;
   });
-
+ //-------------------------------------------------------------------------------------------------------------------------//
+  //This happens whenever this client connects and receives his own username//
   //Listen to the specific username of the user of the session
   socket.on("username", function(data) {
     userName = data.name;
