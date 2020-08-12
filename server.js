@@ -62,12 +62,11 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     let userName = socket.request.user.name
       ? socket.request.user.name
       : socket.request.user.username;
-    usersList[currentRoom] = [];
+    usersList[currentRoom] = usersList[currentRoom] || [];
     usersList[currentRoom].push(userName); //Push the user connected to the usersList
     currentUsers++; //Increment the counter of Users at every connection
     
     console.log(`User ${socket.request.user.name} has connected.`);
-    console.log(currentUsers);
     console.log(usersList);
     //-------------------------------------------------------
     //Manage disconnection of a connected socket
@@ -108,9 +107,9 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       socket.join(data.room);
       //Creates a new users list
       
-      usersList[data.room] = [];
+      usersList[data.room] = usersList[data.room] || [];
       usersList[data.room].push(userName);
-      usersList[currentRoom].splice(usersList.indexOf(userName), 1);
+      usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
       currentRoom = data.room;
         //emits user info
     io.to(data.room).emit("user", {
@@ -119,6 +118,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       usersList: usersList[currentRoom],
       connected: true
     });
+      
       
     })
 
