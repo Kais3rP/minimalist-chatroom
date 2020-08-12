@@ -113,7 +113,9 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
       console.log(usersList)
       console.log(usersList[data.room])
+      console.log(usersList[currentRoom])
         //emits user info
+      console.log(data.room, currentRoom)
     io.to(data.room).emit("user", {
       name: userName,
       currentUsers: currentUsers,
