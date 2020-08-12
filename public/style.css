@@ -75,6 +75,13 @@ i{
 i:hover{
   color: lavender;
 }
+
+ul {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
 .flex-col-space{
   display:flex;
   justify-content: space-between;
@@ -119,6 +126,9 @@ i:hover{
   align-self:flex-start;
 }
 
+#rooms-list{
+  
+}
 .reglog {
   padding:10px;
   border: 1px solid black;

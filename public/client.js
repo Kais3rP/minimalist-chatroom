@@ -37,8 +37,13 @@ document.addEventListener("DOMContentLoaded", function() {
     createAndAppendLi(messages, infoUser);
     //Checks if user events carries roomsList info
     if (data.roomsList) roomsList = data.roomsList
-    //Extracts roomsList info from the user event
-    roomsListDiv.innerHTML = ''; //resets the value at every user event
+    
+      //Remove all the li from the rooms list
+        let roomsListChild = roomsListDiv.lastElementChild;  
+        while (roomsListChild) { 
+            roomsListDiv.removeChild(roomsListChild); 
+            roomsListChild = roomsListDiv.lastElementChild; 
+        } 
     roomsList.forEach(x => createAndAppendLi(roomsListDiv, x))
   });
   
