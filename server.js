@@ -147,6 +147,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
 
     //------------------------------------------------------------------
     //emits user info
+    
     io.emit("user", {
       name: userName,
       currentUsers: currentUsers,
