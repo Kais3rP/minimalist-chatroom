@@ -35,7 +35,8 @@ document.addEventListener("DOMContentLoaded", function() {
     currentUsers.innerText = `Number of users connected: ${data.currentUsers}`;
     let infoUser = `<b> ${message} <\/b>`;                                        
     createAndAppendLi(messages, infoUser);
-    
+    //Checks if user events carries roomsList info
+    if (data.roomsList) roomsList = data.roomsList
     //Extracts roomsList info from the user event
     roomsListDiv.innerHTML = ''; //resets the value at every user event
     roomsList.forEach(x => createAndAppendLi(roomsListDiv, x))
