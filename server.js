@@ -95,7 +95,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       );
       //emits back the message to all the client sockets
      
-      io.in(data.room).emit("chat message", { name: data.name, message: data.message });
+      io.to(data.room).emit("chat message", { name: data.name, message: data.message });
     });
 
     
@@ -111,8 +111,6 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       usersList[data.room].push(userName);
       usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
       console.log(usersList);
-      console.log(usersList[data.room]);
-      console.log(usersList[currentRoom]);
       console.log(data.room, currentRoom);
         //emits user info
       
@@ -151,7 +149,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     //------------------------------------------------------------------
     //emits user info
     
-    io.emit("user", {
+    io.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[currentRoom],

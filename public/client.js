@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
   //This happens whenever a new user connects/disconnects //
   //Listen to the event 'user' from the server sent to all the sockets connected once a new socket connects or disconnects
   socket.on("user", function(data) {
+    currentRoom = data.room;
     let message;
     console.log(data.connected);
     if (data.connected) message = `${data.name} has joined ${currentRoom}.`;
