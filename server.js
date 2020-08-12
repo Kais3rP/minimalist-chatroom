@@ -52,18 +52,20 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
   //Start ioSocket
   //Store the number of currentusers connected
   var currentUsers = 0;
-  var usersList = [];
+  var usersList = {};
   var roomsList = [];
 
   //This is an event listener for the first socket request that is not http, but thanks to passportSocketIo middleware it carries session user info
   io.on("connection", socket => {
-    socket.join("main");
-
+    let currentRoom = 'main';
+    socket.join(currentRoom);
     let userName = socket.request.user.name
       ? socket.request.user.name
       : socket.request.user.username;
-    usersList.push(userName); //Push the user connected to the usersList
+    usersList[currentRoom] = [];
+    usersList[currentRoom].push(userName); //Push the user connected to the usersList
     currentUsers++; //Increment the counter of Users at every connection
+    
     console.log(`User ${socket.request.user.name} has connected.`);
     console.log(currentUsers);
     console.log(usersList);
@@ -78,7 +80,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       io.emit("user", {
         name: userName,
         currentUsers: currentUsers,
-        usersList: usersList,
+        usersList: usersList[currentRoom],
         connected: false
       });
       console.log("user disconnected");
@@ -104,7 +106,19 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     socket.on('join room', (data)=> {
       roomsList.push(data.room);
       socket.join(data.room);
+      //Creates a new users list
       
+      usersList[data.room] = [];
+      usersList[data.room].push(userName);
+      usersList[currentRoom].splice(usersList.indexOf(userName), 1);
+      currentRoom = data.room;
+        //emits user info
+    io.to(data.room).emit("user", {
+      name: userName,
+      currentUsers: currentUsers,
+      usersList: usersList[currentRoom],
+      connected: true
+    });
       
     })
 
@@ -127,7 +141,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     io.emit("user", {
       name: userName,
       currentUsers: currentUsers,
-      usersList: usersList,
+      usersList: usersList[currentRoom],
       connected: true
     }); //Emits an event to all the socket clients with the variable currentUsers
     socket.emit("username", { name: userName });
