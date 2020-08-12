@@ -93,17 +93,19 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
         "message received from " + data.name + " content " + data.message
       );
       //emits back the message to all the client sockets
-      io.emit("chat message", { name: data.name, message: data.message });
+      console.log(data.room)
+      io.to(data.room).emit("chat message", { name: data.name, message: data.message });
     });
 
     
     //--------------------------------------------------------
     //Manage rooms creation
     
-    socket.on('join room', (roomName)=> {
-      roomsList.push(roomName);
-      socket.join(roomName);
-      console.log(roomsList)
+    socket.on('join room', (data)=> {
+      roomsList.push(data.room);
+      socket.join(data.room);
+      
+      
     })
 
     
