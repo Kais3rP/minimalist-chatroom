@@ -103,7 +103,6 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     //Manage rooms creation
     
     socket.on('join room', (data)=> {
-      roomsList.push(data.room);
       socket.join(data.room);
       //Creates a new users list
       
@@ -117,18 +116,20 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       console.log(data.room, currentRoom);
         //emits user info
       
-    io.in(data.room).emit("user", {
+    io.to(data.room).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[data.room],
-      connected: true
+      connected: true,
+      room: data.room
     });
    
-       socket.to(currentRoom).emit("user", {
+    socket.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[currentRoom],
-      connected: true
+      connected: true,
+      room: data.room
     });
        currentRoom = data.room;
     })
@@ -154,7 +155,8 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[currentRoom],
-      connected: true
+      connected: true,
+      room: currentRoom
     }); //Emits an event to all the socket clients with the variable currentUsers
     socket.emit("username", { name: userName });
   });

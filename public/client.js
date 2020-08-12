@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
   socket.on("user", function(data) {
     let message;
     console.log(data.connected);
-    if (data.connected) message = `${data.name} has joined the chat.`;
+    if (data.connected) message = `${data.name} has joined ${currentRoom}.`;
     else message = `${data.name} has left the chat.`;
 
     //prints user info
