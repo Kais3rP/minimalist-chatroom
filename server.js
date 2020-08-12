@@ -100,9 +100,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
         usersList[currentRoom].indexOf(userName),
         1
       );
-      console.log(currentUsers);
-      console.log(usersList);
-      console.log(userName);
+   
       
         
       //Updates rooms list removing the room from the list if it becomes empty upon disconnection
@@ -155,8 +153,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
         usersList[currentRoom].indexOf(userName),
         1
       );
-      console.log(usersList);
-      console.log(data.room, currentRoom);
+    
 
       //emits user info to all the sockets to show info to all the sockets when a user changes the room
       //It emits also the new roomsList

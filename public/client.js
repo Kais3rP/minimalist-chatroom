@@ -1,3 +1,5 @@
+//-------DOM Selectors --------------------------
+
 let form = document.querySelector("form");
 let input = document.getElementById("input");
 let currentUsers = document.getElementById("num-users");
@@ -6,6 +8,10 @@ let usersList = document.getElementById("users-list");
 let nameUsers = document.getElementById("name-users");
 let roomsInput = document.getElementById('rooms-input');
 let roomsButton= document.getElementById('rooms-btn');
+let roomsListDiv = document.getElementById('rooms-list');
+
+
+//-----------------------------------------------------------
 let usersListTitle = "<h4>Users List:</h4>";
 let currentRoom ='main';
 let roomsList = ['main']
@@ -29,9 +35,14 @@ document.addEventListener("DOMContentLoaded", function() {
     currentUsers.innerText = `Number of users connected: ${data.currentUsers}`;
     let infoUser = `<b> ${message} <\/b>`;                                        
     createAndAppendLi(messages, infoUser);
+    
+    //Extracts roomsList info from the user event
+    roomsListDiv.innerHTML = ''; //resets the value at every user event
+    roomsList.forEach(x => createAndAppendLi(roomsListDiv, x))
   });
   
-  
+  //---------------------------------------------------------------
+  //Listens for the users list info
   socket.on('users list', (data)=> {
       usersList.innerHTML = `${usersListTitle} ${data.usersList.map(
       x => `<li>${x}</li>`
