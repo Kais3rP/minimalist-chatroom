@@ -57,6 +57,10 @@ document.addEventListener("DOMContentLoaded", function() {
     input.value = "";
     return false; // prevent form submit from refreshing page
   };
+  
+  
+  //manage the rooms change:
+  roomsButton.onclick = socket.emit('create room', {room: roomsInput.value})
 });
 
 function createAndAppendLi(elem, message, username) {
