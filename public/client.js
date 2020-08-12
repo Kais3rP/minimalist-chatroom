@@ -8,6 +8,7 @@ let roomsInput = document.getElementById('rooms-input');
 let roomsButton= document.getElementById('rooms-btn');
 let usersListTitle = "<h4>Users List:</h4>";
 let currentRoom ='main';
+let roomsList = ['main']
 let userName;
 
 /*global io*/

@@ -78,15 +78,16 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       usersList: usersList[currentRoom]
     }); 
     
-    //Emits the user info of the new connected socket and the actual roomsList
+    //Emits the user info of the new connected socket
 
     io.emit("user", {
       name: userName,
       currentUsers: currentUsers,
       connected: true,
       room: currentRoom,
-      roomsList: roomsList
+  
     });
+    //emits the username of the socket only to the particular socket so it can save it clientside
     socket.emit("username", { name: userName });
     
     
