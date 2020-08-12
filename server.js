@@ -125,10 +125,10 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
        io.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
-      usersList: usersList[currentRoom],
+      usersList: ["hello"],
       connected: true
     });
-       currentRoom = data.room;
+       //currentRoom = data.room;
     })
 
     
