@@ -122,13 +122,13 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       room: data.room
     });
    
-    socket.to(currentRoom).emit("user", {
+    /*socket.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[currentRoom],
       connected: true,
       room: data.room
-    });
+    });*/
        currentRoom = data.room;
     })
 
