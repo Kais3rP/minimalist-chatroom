@@ -5,7 +5,7 @@
 }
 
 body {
-  width:100vw;
+ 
   background:white;
   font-family: sans-serif;
   margin: 0;
@@ -102,13 +102,21 @@ i:hover{
   
 }
 
-
+#container{
+  width:90%;
+}
 .chat-box{
   width:50%;
   font-size:12px;
   border:1px solid grey;
   border-radius:10px;
   box-shadow:2px 2px 10px 5px grey;
+}
+
+#rooms{
+  width:20%;
+  margin:50px;
+  align-self:flex-start;
 }
 
 .reglog {
@@ -156,6 +164,3 @@ i:hover{
   padding:10px;
 }
 
-#rooms{
-  width:20%;
-}
