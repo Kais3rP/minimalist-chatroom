@@ -149,15 +149,14 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
 
       usersList[data.room] = usersList[data.room] || [];
       usersList[data.room].push(userName);
-      usersList[currentRoom].splice(
-        usersList[currentRoom].indexOf(userName),
-        1
-      );
+      usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName),1);
       
-       if(!roomsList.includes(data.room)) roomsList.push(data.room); //Adds a  new room if it doesn't  exist
+      console.log(roomsList)
+      if(!roomsList.includes(data.room)) roomsList.push(data.room); //Adds a  new room if it doesn't  exist
       if (usersList[currentRoom].length === 0) roomsList.splice(roomsList.indexOf(currentRoom),1) //Checks if the previous room became empty upon change
       
       console.log(usersList)
+      console.log(currentRoom)
       console.log(roomsList)
 
       //emits user info to all the sockets to show info to all the sockets when a user changes the room

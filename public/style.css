@@ -82,6 +82,8 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+
 .flex-col-space{
   display:flex;
   justify-content: space-between;
@@ -126,8 +128,14 @@ ul {
   align-self:flex-start;
 }
 
+#rooms-join {
+  align-self: flex-start;
+}
+#rooms-list-title {
+  align-self: flex-start;
+}
 #rooms-list{
-  
+  align-self: flex-start;
 }
 .reglog {
   padding:10px;
