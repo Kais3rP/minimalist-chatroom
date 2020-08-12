@@ -76,7 +76,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       console.log(currentUsers);
       console.log(usersList);
       console.log(userName);
-      io.to(currentRoom).emit("user", {
+      socket.to(currentRoom).emit("user", {
         name: userName,
         currentUsers: currentUsers,
         usersList: usersList[currentRoom],
@@ -111,21 +111,22 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       usersList[data.room] = usersList[data.room] || [];
       usersList[data.room].push(userName);
       usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
-      console.log(usersList)
-      console.log(usersList[data.room])
-      console.log(usersList[currentRoom])
+      console.log(usersList);
+      console.log(usersList[data.room]);
+      console.log(usersList[currentRoom]);
+      console.log(data.room, currentRoom);
         //emits user info
-      console.log(data.room, currentRoom)
-    io.to(data.room).emit("user", {
+      
+    socket.to(data.room).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[data.room],
       connected: true
     });
-       io.to(currentRoom).emit("user", {
+       socket.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
-      usersList: ["hello"],
+      usersList: usersList[currentRoom],
       connected: true
     });
        //currentRoom = data.room;
