@@ -7,6 +7,7 @@ let nameUsers = document.getElementById("name-users");
 let roomsInput = document.getElementById('rooms-input');
 let roomsButton= document.getElementById('rooms-btn');
 let usersListTitle = "<h4>Users List:</h4>";
+let currentRoom ="";
 let userName;
 
 /*global io*/
@@ -53,14 +54,16 @@ document.addEventListener("DOMContentLoaded", function() {
   // Form submitting the new message to the server
   form.onsubmit = function() {
     var messageToSend = input.value;
-    socket.emit("chat message", { message: messageToSend, name: userName });
+    socket.emit("chat message", { message: messageToSend, name: userName, room: });
     input.value = "";
     return false; // prevent form submit from refreshing page
   };
   
   
   //manage the rooms change:
-  roomsButton.onclick = socket.emit('create room', {room: roomsInput.value})
+  roomsButton.onclick = () => { 
+    currentRoom = roomsInput.value;
+    socket.emit('join room', {room: roomsInput.value}) }
 });
 
 function createAndAppendLi(elem, message, username) {
