@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //prints user info
     currentUsers.innerText = `Number of users connected: ${data.currentUsers}`;
-    usersList.innerHTML = `${usersListTitle} ${data.usersList.map(
+    if (data.usersList) usersList.innerHTML = `${usersListTitle} ${data.usersList.map(
       x => `<li>${x}</li>`
     )}`;
     let infoUser = `<b> ${message} <\/b>`;                                        

@@ -59,7 +59,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
   io.on("connection", socket => {
     
     let currentRoom = 'main';
-    socket.join(currentRoom);
+    socket.join(currentRoom);  //As a new socket connects it joins to "main" room
     let userName = socket.request.user.name
       ? socket.request.user.name
       : socket.request.user.username;
@@ -77,11 +77,15 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       console.log(currentUsers);
       console.log(usersList);
       console.log(userName);
-      socket.to(currentRoom).emit("user", {
+      //Sends user connect/disconnect ifno to all the sockets
+      socket.emit("user", {
         name: userName,
         currentUsers: currentUsers,
-        usersList: usersList[currentRoom],
         connected: false
+      });
+      //Updates the userlist to the specific socket room
+      socket.to(currentRoom).emit("users list", { 
+      usersList: usersList[currentRoom],
       });
       console.log("user disconnected");
     });
@@ -94,27 +98,28 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       console.log(
         "message received from " + data.name + " content " + data.message
       );
-      //emits back the message to all the client sockets
+      //emits back the message to all the client sockets in the specific room
      
       io.to(data.room).emit("chat message", { name: data.name, message: data.message });
     });
 
     
     //--------------------------------------------------------
-    //Manage rooms creation
+    //Manage rooms joining
     
     socket.on('join room', (data)=> {
-      socket.leave(currentRoom);
+      socket.leave(currentRoom);  //Leaves the previous room and joins the new one
       socket.join(data.room);
-      //Creates a new users list
       
+      //Creates a new users list and updates the previous one
       
       usersList[data.room] = usersList[data.room] || [];
       usersList[data.room].push(userName);
       usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
       console.log(usersList);
       console.log(data.room, currentRoom);
-        //emits user info
+        
+      //emits user info to the new room with the new usersList
       
     io.to(data.room).emit("user", {
       name: userName,
@@ -124,6 +129,10 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       room: data.room
     });
    
+       socket.to(data.room).emit("users list", { 
+      usersList: usersList[currentRoom],
+      });
+      //emits the user info with the modified usersList to the previous room
     socket.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
@@ -131,6 +140,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       connected: true,
       room: data.room
     });
+      //Updates the currentRoom value of the socket
        currentRoom = data.room;
     })
 
@@ -149,7 +159,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     });
 
     //------------------------------------------------------------------
-    //emits user info
+    //emits user info to the main room upon the first connection
     
     io.to(currentRoom).emit("user", {
       name: userName,
@@ -158,6 +168,13 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       connected: true,
       room: currentRoom
     }); //Emits an event to all the socket clients with the variable currentUsers
+    
+     io.emit("user", {
+      name: userName,
+      currentUsers: currentUsers,
+      connected: true,
+      room: currentRoom
+    });
     socket.emit("username", { name: userName });
   });
 });
