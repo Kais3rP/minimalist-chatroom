@@ -94,7 +94,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
         "message received from " + data.name + " content " + data.message
       );
       //emits back the message to all the client sockets
-      console.log(data.room)
+     
       io.to(data.room).emit("chat message", { name: data.name, message: data.message });
     });
 
@@ -107,19 +107,26 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       socket.join(data.room);
       //Creates a new users list
       
+      
       usersList[data.room] = usersList[data.room] || [];
       usersList[data.room].push(userName);
       usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
-      currentRoom = data.room;
+      console.log(usersList)
+      console.log(usersList[data.room])
         //emits user info
     io.to(data.room).emit("user", {
+      name: userName,
+      currentUsers: currentUsers,
+      usersList: usersList[data.room],
+      connected: true
+    });
+       io.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[currentRoom],
       connected: true
     });
-      
-      
+       currentRoom = data.room;
     })
 
     
