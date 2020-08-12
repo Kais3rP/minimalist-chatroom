@@ -95,7 +95,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       );
       //emits back the message to all the client sockets
      
-      io.to(data.room).emit("chat message", { name: data.name, message: data.message });
+      io.in(data.room).emit("chat message", { name: data.name, message: data.message });
     });
 
     
@@ -117,19 +117,20 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       console.log(data.room, currentRoom);
         //emits user info
       
-    socket.to(data.room).emit("user", {
+    io.in(data.room).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[data.room],
       connected: true
     });
+   
        socket.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[currentRoom],
       connected: true
     });
-       //currentRoom = data.room;
+       currentRoom = data.room;
     })
 
     
