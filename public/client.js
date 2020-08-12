@@ -4,6 +4,8 @@ let currentUsers = document.getElementById("num-users");
 let messages = document.getElementById("messages");
 let usersList = document.getElementById("users-list");
 let nameUsers = document.getElementById("name-users");
+let roomsInput = document.getElementById('rooms-input');
+let roomsButton= document.getElementById('rooms-btn');
 let usersListTitle = "<h4>Users List:</h4>";
 let userName;
 

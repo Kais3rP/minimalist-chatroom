@@ -5,6 +5,7 @@
 }
 
 body {
+  width:100vw;
   background:white;
   font-family: sans-serif;
   margin: 0;
@@ -74,6 +75,12 @@ i{
 i:hover{
   color: lavender;
 }
+.flex-col-space{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
 .flex-row-space{
   display:flex;
   justify-content: space-between;
@@ -97,7 +104,7 @@ i:hover{
 
 
 .chat-box{
-  width:max(50vw, 300px);
+  width:50%;
   font-size:12px;
   border:1px solid grey;
   border-radius:10px;
@@ -147,4 +154,8 @@ i:hover{
 }
 #logout{
   padding:10px;
+}
+
+#rooms{
+  width:20%;
 }

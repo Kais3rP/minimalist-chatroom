@@ -11,9 +11,10 @@ html
     h1.border.center Minimalist Private Chat
     h2.center Private Chat Room
     p#num-users
-    .flex-row
-      .#rooms
-        input
+    .flex-row-space
+      #rooms.flex-col
+        input#rooms-input
+        button#rooms-btn Go to the room
       .chat-box
         .flex-row
           ul#messages
