@@ -57,6 +57,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
 
   //This is an event listener for the first socket request that is not http, but thanks to passportSocketIo middleware it carries session user info
   io.on("connection", socket => {
+    
     let currentRoom = 'main';
     socket.join(currentRoom);
     let userName = socket.request.user.name
@@ -103,6 +104,7 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
     //Manage rooms creation
     
     socket.on('join room', (data)=> {
+      socket.leave(currentRoom);
       socket.join(data.room);
       //Creates a new users list
       
@@ -122,13 +124,13 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       room: data.room
     });
    
-    /*socket.to(currentRoom).emit("user", {
+    socket.to(currentRoom).emit("user", {
       name: userName,
       currentUsers: currentUsers,
       usersList: usersList[currentRoom],
       connected: true,
       room: data.room
-    });*/
+    });
        currentRoom = data.room;
     })
 
