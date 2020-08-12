@@ -26,12 +26,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //prints user info
     currentUsers.innerText = `Number of users connected: ${data.currentUsers}`;
-    if (data.usersList) usersList.innerHTML = `${usersListTitle} ${data.usersList.map(
-      x => `<li>${x}</li>`
-    )}`;
     let infoUser = `<b> ${message} <\/b>`;                                        
     createAndAppendLi(messages, infoUser);
   });
+  
+  
+  socket.on('users list', (data)=> {
+      usersList.innerHTML = `${usersListTitle} ${data.usersList.map(
+      x => `<li>${x}</li>`
+    )}`;
+  })
  //-------------------------------------------------------------------------------------------------------------------------//
   //This happens whenever a user sends a public message //
   //Listener for incoming chat messages

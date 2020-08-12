@@ -57,23 +57,50 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
 
   //This is an event listener for the first socket request that is not http, but thanks to passportSocketIo middleware it carries session user info
   io.on("connection", socket => {
-    
-    let currentRoom = 'main';
-    socket.join(currentRoom);  //As a new socket connects it joins to "main" room
+    let currentRoom = "main";
+    socket.join(currentRoom); //As a new socket connects it joins to "main" room
     let userName = socket.request.user.name
       ? socket.request.user.name
       : socket.request.user.username;
     usersList[currentRoom] = usersList[currentRoom] || [];
     usersList[currentRoom].push(userName); //Push the user connected to the usersList
     currentUsers++; //Increment the counter of Users at every connection
-    
+
     console.log(`User ${socket.request.user.name} has connected.`);
     console.log(usersList);
+    
+    /*** Emitting info upon every new socket connection***/
+    
+     //------------------------------------------------------------------
+    //emits user info to the main room upon the first connection
+
+    io.to(currentRoom).emit("users list", {
+      usersList: usersList[currentRoom]
+    }); 
+    
+    //Emits the user info of the new connected socket
+
+    io.emit("user", {
+      name: userName,
+      currentUsers: currentUsers,
+      connected: true,
+      room: currentRoom
+    });
+    socket.emit("username", { name: userName });
+    
+    io.emit('rooms list', {
+      roomsList: rooms
+    })
+    
+    /*** ---------------------o--------------------------------***/
     //-------------------------------------------------------
     //Manage disconnection of a connected socket
     socket.on("disconnect", () => {
       currentUsers--;
-      usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
+      usersList[currentRoom].splice(
+        usersList[currentRoom].indexOf(userName),
+        1
+      );
       console.log(currentUsers);
       console.log(usersList);
       console.log(userName);
@@ -84,8 +111,8 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
         connected: false
       });
       //Updates the userlist to the specific socket room
-      socket.to(currentRoom).emit("users list", { 
-      usersList: usersList[currentRoom],
+      socket.to(currentRoom).emit("users list", {
+        usersList: usersList[currentRoom]
       });
       console.log("user disconnected");
     });
@@ -99,58 +126,52 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
         "message received from " + data.name + " content " + data.message
       );
       //emits back the message to all the client sockets in the specific room
-     
-      io.to(data.room).emit("chat message", { name: data.name, message: data.message });
+
+      io.to(data.room).emit("chat message", {
+        name: data.name,
+        message: data.message
+      });
     });
 
-    
     //--------------------------------------------------------
     //Manage rooms joining
-    
-    socket.on('join room', (data)=> {
-      socket.leave(currentRoom);  //Leaves the previous room and joins the new one
+
+    socket.on("join room", data => {
+      socket.leave(currentRoom); //Leaves the previous room and joins the new one
       socket.join(data.room);
-      
+
       //Creates a new users list and updates the previous one
-      
+
       usersList[data.room] = usersList[data.room] || [];
       usersList[data.room].push(userName);
-      usersList[currentRoom].splice(usersList[currentRoom].indexOf(userName), 1);
+      usersList[currentRoom].splice(
+        usersList[currentRoom].indexOf(userName),
+        1
+      );
       console.log(usersList);
       console.log(data.room, currentRoom);
-        
-      //emits user info to the new room with the new usersList
-      
-    io.to(data.room).emit("user", {
-      name: userName,
-      currentUsers: currentUsers,
-      usersList: usersList[data.room],
-      connected: true,
-      room: data.room
-    });
-   
-       socket.to(data.room).emit("users list", { 
-      usersList: usersList[currentRoom],
-      });
-      //emits the user info with the modified usersList to the previous room
-    socket.to(currentRoom).emit("user", {
-      name: userName,
-      currentUsers: currentUsers,
-      usersList: usersList[currentRoom],
-      connected: true,
-      room: data.room
-    });
-      //Updates the currentRoom value of the socket
-       currentRoom = data.room;
-    })
 
-    
-    
-    
-    
-    
-    
-    
+      //emits user info to the new room with the new usersList
+
+      io.emit("user", {
+        name: userName,
+        currentUsers: currentUsers,
+        connected: true,
+        room: data.room
+      });
+
+      io.to(data.room).emit("users list", {
+        usersList: usersList[data.room]
+      });
+
+      //emits the modified users list to the previous room
+      io.to(currentRoom).emit("users list", {
+        usersList: usersList[currentRoom]
+      });
+      //Updates the currentRoom value of the socket
+      currentRoom = data.room;
+    });
+
     //--------------------------------------------------------
     //Manage private messaging from client sockets
 
@@ -158,23 +179,6 @@ mongo.connect(process.env.MONGO_URI, (err, client) => {
       socket.to(id).emit("my message", msg);
     });
 
-    //------------------------------------------------------------------
-    //emits user info to the main room upon the first connection
-    
-    io.to(currentRoom).emit("user", {
-      name: userName,
-      currentUsers: currentUsers,
-      usersList: usersList[currentRoom],
-      connected: true,
-      room: currentRoom
-    }); //Emits an event to all the socket clients with the variable currentUsers
-    
-     io.emit("user", {
-      name: userName,
-      currentUsers: currentUsers,
-      connected: true,
-      room: currentRoom
-    });
-    socket.emit("username", { name: userName });
+   
   });
 });
